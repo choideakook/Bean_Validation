@@ -25,42 +25,40 @@
     <form action="item.html" th:action th:object="${item}" method="post">
 
 <!--        글로벌 오류 표시 시작-->
-        <div th:if="${errors?.containsKey('globalError')}">
+        <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error"
-               th:text="${errors['globalError']}"></p>
+               th:each="err : ${#fields.globalErrors()}"
+               th:text="${err}"></p>
         </div>
 <!--        글로벌 오류 표시 종료-->
         <div>
             <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
             <input type="text"
                    th:field="*{itemName}"
-                   th:class="${errors?.containsKey('itemName')} ? 'form-control field-error' : 'form-control'"
+                   th:errorclass="field-error" class="form-control"
                    placeholder="이름을 입력하세요">
             <div class="field-error"
-                 th:if="${errors?.containsKey('itemName')}">
-                [[${errors['itemName']}]]
+                 th:errors="*{itemName}">
             </div>
         </div>
         <div>
             <label for="price" th:text="#{label.item.price}">가격</label>
             <input type="text"
                    th:field="*{price}"
-                   th:class="${errors?.containsKey('price')} ? 'form-control field-error' : 'form-control'"
+                   th:errorclass="field-error" class="form-control"
                    placeholder="가격을 입력하세요">
             <div class="field-error"
-                 th:if="${errors?.containsKey('price')}">
-                [[${errors['price']}]]
+                 th:errors="*{price}">
             </div>
         </div>
         <div>
             <label for="quantity" th:text="#{label.item.quantity}">수량</label>
             <input type="text"
                    th:field="*{quantity}"
-                   th:class="${errors?.containsKey('quantity')} ? 'form-control field-error' : 'form-control'"
+                   th:errorclass="field-error" class="form-control"
                    placeholder="수량을 입력하세요">
             <div class="field-error"
-                 th:if="${errors?.containsKey('quantity')}">
-                [[${errors['quantity']}]]
+                 th:errors="*{quantity}">
             </div>
         </div>
 
@@ -73,7 +71,7 @@
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='items.html'"
-                        th:onclick="|location.href='@{/validation/v1/items}'|"
+                        th:onclick="|location.href='@{/validation/v3/items}'|"
                         type="button" th:text="#{button.cancel}">취소</button>
             </div>
         </div>
